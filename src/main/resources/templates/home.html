@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="/CSS/style.css" />
+
+  </head>
+  <body>
+    <header>
+      <h2>BOOKS WORLD</h2>
+      <h3>created by: TALHA</h3>
+      <hr />
+    </header>
+
+    <nav
+      style="display: inline-flex; width: 95%; justify-content: space-between"
+    >
+    <form th:action="@{/Adminsearch}" method="get" class="search-form">
+      <input
+        type="text"
+        name="keyword"
+        placeholder="Search by title"
+        th:value="${searchKeyword}"
+        class="search-input"
+      />
+      <button type="submit" class="search-button">Search</button>
+    </form>
+    
+    </nav>
+    <div class="book-container">
+      <div th:each="book : ${searchedbooks}" class="book-item">
+        
+        <!-- Image Section -->
+        <div class="book-image-section">
+          <div th:if="${book.image}">
+            <img th:src="${book.image}" th:alt="${book.image}"
+                 class="book-image"
+                 onerror="this.onerror=null;this.src='/images/image-not-found.png'"/>
+            <p th:if="${book.image.startsWith('https://drive.google.com')}"
+               class="book-drive-note">
+              Note: Ensure the Google Drive file has "Anyone with the link can view" permissions
+            </p>
+          </div>
+        </div>
+    
+        <!-- Content Section (unchanged as per your note) -->
+        <div class="book-card">
+          <div class="book-header">
+            <h2 th:text="${book.title}" class="book-title"></h2>
+            <span th:text="${book.year}" class="book-year"></span>
+          </div>
+        
+          <div class="book-subinfo">
+            <span th:text="${book.author}" class="book-author"></span>
+            <span th:text="${book.catagory}" class="book-category"></span>
+          </div>
+        
+          <p class="book-description">
+            <span th:text="${book.description}"></span>
+          </p>
+        
+          <div class="book-controls">
+            <div th:if="${book.File}">
+              <a th:href="@{${book.File}}" target="_blank" class="btn btn-view">View File</a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+
+    <br />
+    <hr>
+    <div class="book-container">
+      <div th:each="book : ${books}" class="book-item">
+        
+        <!-- Image Section -->
+        <div class="book-image-section">
+          <div th:if="${book.image}">
+            <img th:src="${book.image}" th:alt="${book.image}"
+                 class="book-image"
+                 onerror="this.onerror=null;this.src='/images/image-not-found.png'"/>
+            <p th:if="${book.image.startsWith('https://drive.google.com')}"
+               class="book-drive-note">
+              Note: Ensure the Google Drive file has "Anyone with the link can view" permissions
+            </p>
+          </div>
+        </div>
+    
+        <!-- Content Section (unchanged as per your note) -->
+        <div class="book-card">
+          <div class="book-header">
+            <h2 th:text="${book.title}" class="book-title"></h2>
+            <span th:text="${book.year}" class="book-year"></span>
+          </div>
+        
+          <div class="book-subinfo">
+            <span th:text="${book.author}" class="book-author"></span>
+            <span th:text="${book.catagory}" class="book-category"></span>
+          </div>
+        
+          <p class="book-description">
+            <span th:text="${book.description}"></span>
+          </p>
+        
+          <div class="book-controls">
+            <div th:if="${book.File}">
+              <a th:href="@{${book.File}}" target="_blank" class="btn btn-view">View File</a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+
+ <br>
+ <button onclick="window.location.href='/'" class="logout-btn">
+  Logout
+</button>  
+
+<script src="/JS/commonJS.js"></script>
+  </body>
+</html>

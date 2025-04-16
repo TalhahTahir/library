@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Library Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 2rem;
+      color: #fff;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    hr {
+      width: 60%;
+      border: 1px solid #fff;
+      margin: 1rem 0 2rem 0;
+    }
+
+    p {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .button-group button {
+      flex: 1 1 150px;
+      max-width: 200px;
+      background: #ffffff;
+      color: #6e8efb;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .button-group button:hover {
+      background: #6e8efb;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 500px) {
+      h2 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 1.1rem;
+      }
+
+      .button-group button {
+        width: 100%;
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Library Management System</h2>
+  <hr>
+  <p>Login as:</p>
+  <div class="button-group">
+    <button onclick="window.location.href='/home'">User</button>
+    <button onclick="window.location.href='AdminPanel'">Admin</button>
+  </div>
+</body>
+</html>

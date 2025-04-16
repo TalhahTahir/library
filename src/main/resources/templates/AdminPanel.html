@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="/CSS/style.css" />
+    <link rel="stylesheet" type="text/css" href="/CSS/Admin_in_Styles.css" />
+    <script>
+          function toggleform() {
+            var form = document.getElementById("addBookForm");
+            form.style.display = form.style.display === "none" ? "block" : "none";
+          }
+    </script>
+  </head>
+  <body>
+
+    <header>
+      <h2>Welcome to the BOOKS WORLD</h2>
+      <h3>Mr. TALHA TAHIR</h3>
+      <hr />
+    </header>
+
+    <nav
+      style="display: inline-flex; width: 95%; justify-content: space-between"
+    >
+    <div class="searchArea">
+    <form th:action="@{/Adminsearch}" method="get" class="search-form">
+      <input
+        type="text"
+        name="keyword"
+        placeholder="Enter Title"
+        th:value="${searchKeyword}"
+        class="search-input"
+      />
+      <button type="submit" class="search-button">Search</button>
+    </form>
+    <button id="clearSearchBtn" style="display:none;" onclick="clearSearch()">Clear Search</button>
+  </div>
+
+    <div class="form-container">
+      <div class="add">
+        <!-- Right-aligned button only -->
+        <div class="add-button-container">
+          <button onclick="toggleform()" class="add-book-btn">+ Add Book</button>
+        </div>
+    
+        <div id="addBookForm" class="book-form-container">
+          <form th:action="@{/addBook}" method="post" th:object="${book}">
+            <div class="form-columns">
+              <div class="form-column">
+                <div class="form-group">
+                  <label><strong>Title:</strong></label><br />
+                  <input th:field="*{title}" class="form-input" />
+                  <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-message"></div>
+                </div>
+    
+                <div class="form-group">
+                  <label><strong>Author:</strong></label><br />
+                  <input th:field="*{author}" class="form-input" />
+                  <div th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="error-message"></div>
+                </div>
+    
+                <div class="form-group">
+                  <label><strong>Year:</strong></label><br />
+                  <input th:field="*{year}" class="form-input" />
+                  <div th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="error-message"></div>
+                </div>
+              </div>
+    
+              <div class="form-column">
+                <div class="form-group">
+                  <label><strong>Category:</strong></label><br />
+                  <input th:field="*{catagory}" class="form-input" />
+                  <div th:if="${#fields.hasErrors('catagory')}" th:errors="*{catagory}" class="error-message"></div>
+                </div>
+    
+                <div class="form-group">
+                  <label><strong>Image URL:</strong></label><br />
+                  <input th:field="*{image}" class="form-input" />
+                  <div th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="error-message"></div>
+                </div>
+    
+                <div class="form-group">
+                  <label><strong>File URL:</strong></label><br />
+                  <input th:field="*{File}" class="form-input" />
+                  <div th:if="${#fields.hasErrors('File')}" th:errors="*{File}" class="error-message"></div>
+                </div>
+              </div>
+            </div>
+    
+            <div class="form-group">
+              <label><strong>Description:</strong></label><br />
+              <textarea th:field="*{description}" class="form-textarea"></textarea>
+              <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error-message"></div>
+            </div>
+    
+            <button type="submit" class="submit-btn">Done</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    </nav>
+    <!-- Searched Books -->
+    <div id="searchedBooksContainer" class="book-container">
+      <div th:each="book : ${searchedbooks}" class="book-item">
+        
+        <!-- Image Section -->
+        <div class="book-image-section">
+          <div th:if="${book.image}">
+            <img th:src="${book.image}" th:alt="${book.image}"
+                 class="book-image"
+                 onerror="this.onerror=null;this.src='/images/image-not-found.png'"/>
+            <p th:if="${book.image.startsWith('https://drive.google.com')}"
+               class="book-drive-note">
+              Note: Ensure the Google Drive file has "Anyone with the link can view" permissions
+            </p>
+          </div>
+        </div>
+    
+        <!-- Content Section (unchanged as per your note) -->
+        <div class="book-card">
+          <div class="book-header">
+            <h2 th:text="${book.title}" class="book-title"></h2>
+            <span th:text="${book.year}" class="book-year"></span>
+          </div>
+        
+          <div class="book-subinfo">
+            <span th:text="${book.author}" class="book-author"></span>
+            <span th:text="${book.catagory}" class="book-category"></span>
+          </div>
+        
+          <p class="book-description">
+            <span th:text="${book.description}"></span>
+          </p>
+        
+          <div class="book-controls">
+            <div th:if="${book.File}">
+              <a th:href="@{${book.File}}" target="_blank" class="btn btn-view">View File</a>
+            </div>
+        
+            <button type="button" onclick="openUpdateModal(this)"
+              th:attr="data-id=${book.id},data-title=${book.title},data-author=${book.author},data-year=${book.year},data-category=${book.catagory},data-description=${book.description},data-image=${book.image},data-file=${book.File}"
+              class="btn btn-update">
+              Update
+            </button>
+        
+            <form th:action="@{/delete/{id}(id=${book.id})}" method="post">
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+              <button type="submit" class="btn btn-delete">Delete</button>
+            </form>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <hr style="
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, #3b9eff, #ff6a00, #ff6a00);
+  border-radius: 5px;
+  margin: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+">
+
+    <!-- All Books Showcase -->
+    <div id="allBooksContainer" class="book-container">
+      <div th:each="book : ${books}" class="book-item">
+        
+        <!-- Image Section -->
+        <div class="book-image-section">
+          <div th:if="${book.image}">
+            <img th:src="${book.image}" th:alt="${book.image}"
+                 class="book-image"
+                 onerror="this.onerror=null;this.src='/images/image-not-found.png'"/>
+            <p th:if="${book.image.startsWith('https://drive.google.com')}"
+               class="book-drive-note">
+              Note: Ensure the Google Drive file has "Anyone with the link can view" permissions
+            </p>
+          </div>
+        </div>
+    
+        <!-- Content Section (unchanged as per your note) -->
+        <div class="book-card">
+          <div class="book-header">
+            <h2 th:text="${book.title}" class="book-title"></h2>
+            <span th:text="${book.year}" class="book-year"></span>
+          </div>
+        
+          <div class="book-subinfo">
+            <span th:text="${book.author}" class="book-author"></span>
+            <span th:text="${book.catagory}" class="book-category"></span>
+          </div>
+        
+          <p class="book-description">
+            <span th:text="${book.description}"></span>
+          </p>
+        
+          <div class="book-controls">
+            <div th:if="${book.File}">
+              <a th:href="@{${book.File}}" target="_blank" class="btn btn-view">View File</a>
+            </div>
+        
+            <button type="button" onclick="openUpdateModal(this)"
+              th:attr="data-id=${book.id},data-title=${book.title},data-author=${book.author},data-year=${book.year},data-category=${book.catagory},data-description=${book.description},data-image=${book.image},data-file=${book.File}"
+              class="btn btn-update">
+              Update
+            </button>
+        
+            <form th:action="@{/delete/{id}(id=${book.id})}" method="post">
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+              <button type="submit" class="btn btn-delete">Delete</button>
+            </form>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <br />
+    <button onclick="window.location.href='logout'" class="logout-btn">
+      Logout
+    </button>
+    
+
+    <div id="updateBookModal" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Update Book</h2>
+        <form id="updateBookForm" method="post">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <input type="hidden" name="id" id="bookId" />
+    
+          <div class="up">
+            <div class="left">
+              <div class="form-group">
+                <label>Title:</label>
+                <input type="text" id="updateTitle" name="title" />
+              </div>
+              <div class="form-group">
+                <label>Author:</label>
+                <input type="text" id="updateAuthor" name="author" />
+              </div>
+              <div class="form-group">
+                <label>Year:</label>
+                <input type="text" id="updateYear" name="year" />
+              </div>
+            </div>
+    
+            <div class="right">
+              <div class="form-group">
+                <label>Category:</label>
+                <input type="text" id="updateCategory" name="catagory" />
+              </div>
+              <div class="form-group">
+                <label>Image:</label>
+                <input type="text" id="updateImage" name="image" />
+              </div>
+              <div class="form-group">
+                <label>File:</label>
+                <input type="text" id="updateFile" name="File" />
+              </div>
+            </div>
+          </div>
+    
+          <div class="form-group">
+            <label>Description:</label>
+            <textarea id="updateDescription" name="description"></textarea>
+          </div>
+    
+          <div class="modal-actions">
+            <button type="submit" class="btn-update">Update</button>
+            <button type="button" onclick="closeUpdateModal()" class="btn-cancel">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+
+    <script th:inline="javascript">
+      function openUpdateModal(button) {
+        document.getElementById("bookId").value = button.dataset.id;
+        document.getElementById("updateTitle").value = button.dataset.title;
+        document.getElementById("updateAuthor").value = button.dataset.author;
+        document.getElementById("updateYear").value = button.dataset.year;
+        document.getElementById("updateCategory").value = button.dataset.category;
+        document.getElementById("updateImage").value = button.dataset.image;
+        document.getElementById("updateFile").value = button.dataset.file;
+        document.getElementById("updateDescription").value = button.dataset.description;
+    
+        document.getElementById("updateBookForm").action = "/update/" + button.dataset.id;
+        document.getElementById("updateBookModal").style.display = "flex";
+      }
+    
+      function closeUpdateModal() {
+        document.getElementById("updateBookModal").style.display = "none";
+      }
+      
+      window.onclick = function(event) {
+        const modal = document.getElementById("updateBookModal");
+        if (event.target === modal) {
+          closeUpdateModal();
+        }
+      };
+    </script>
+    <script src="/JS/commonJS.js"></script>
+  </body>
+</html>
