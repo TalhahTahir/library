@@ -18,7 +18,7 @@ public class SecurityConfig {
     @Bean
     UserDetailsService userDetailsService() {
         UserDetails admin = User.withUsername("Talha")
-                                .password("{noop}2612")
+                                .password("{noop}42155")
                                 .build();
         return new InMemoryUserDetailsManager(admin);
     }

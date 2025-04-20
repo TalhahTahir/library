@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @NotEmpty
     private String title;
     @NotEmpty
@@ -36,4 +36,8 @@ public class Book {
     @Column(length = 500)
     private String description;
 
+    // Manually added setter for id to fix Lombok issue
+public void setId(Long id) {
+    this.id = id;
+}
 }

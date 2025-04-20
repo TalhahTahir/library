@@ -16,9 +16,10 @@
     </header>
 
     <nav
-      style="display: inline-flex; width: 95%; justify-content: space-between"
+      style="display: inline-flex; width: 95%; justify-content: left;"
     >
-    <form th:action="@{/Adminsearch}" method="get" class="search-form">
+    <div class="searcharea">
+    <form th:action="@{/search}" method="get" class="search-form">
       <input
         type="text"
         name="keyword"
@@ -28,9 +29,11 @@
       />
       <button type="submit" class="search-button">Search</button>
     </form>
-    
+    <button id="clearSearchBtn" style="display:none;">Clear Search</button>
+  </div>
+  <br>
     </nav>
-    <div class="book-container">
+    <div id="searchedBooksContainer" class="book-container">
       <div th:each="book : ${searchedbooks}" class="book-item">
         
         <!-- Image Section -->
@@ -75,7 +78,7 @@
 
     <br />
     <hr>
-    <div class="book-container">
+    <div id="allBooksContainer" class="book-container">
       <div th:each="book : ${books}" class="book-item">
         
         <!-- Image Section -->
@@ -123,6 +126,32 @@
   Logout
 </button>  
 
-<script src="/JS/commonJS.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const keyword = urlParams.get("keyword");
+  
+    const clearBtn = document.getElementById("clearSearchBtn");
+    const searchedBooks = document.getElementById("searchedBooksContainer");
+    const allBooks = document.getElementById("allBooksContainer");
+  
+    if (keyword && keyword.trim() !== "") {
+      // User searched something
+      clearBtn.style.display = "inline-block";
+      searchedBooks.style.display = "flex";
+      allBooks.style.display = "none";
+    } else {
+      // No search keyword present
+      clearBtn.style.display = "none";
+      searchedBooks.style.display = "none";
+      allBooks.style.display = "flex";
+    }
+  
+    clearBtn.addEventListener("click", () => {
+      window.location.href = "/search"; // or wherever your all-books page lives
+    });
+  });
+
+</script>
   </body>
 </html>

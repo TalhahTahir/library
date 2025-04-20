@@ -96,6 +96,27 @@ header {
     background-color: #0056b3;
   }
 
+  #clearSearchBtn {
+    display: none;
+    padding: 8px 8px;
+    background-color: transparent; /* Bootstrap blue */
+    color: #6c757d;
+    border: 1.5px solid #6c757d;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  #clearSearchBtn:hover {
+    background-color: #6c757d;
+    color: #f5f5f5;
+  }
+  
+  #clearSearchBtn:active {
+    background-color: #5c5f63;
+  }
+  
   
   .book-container {
     display: flex;
@@ -115,7 +136,7 @@ header {
   }
   
   .book-item:hover {
-    transform: scale(1.05);
+    transform: scale(1.015);
     box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
   }
   
