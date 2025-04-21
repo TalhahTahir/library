@@ -133,7 +133,7 @@ Hibernate automatically creates the schema when the application starts with `spr
 
 ### Admin Interface
 
-1. **Admin Panel** (accessible at `/AdminPanel`):
+**Admin Panel** (accessible at `/AdminPanel`):
 
 1. Login with credentials:
 
@@ -145,7 +145,7 @@ Hibernate automatically creates the schema when the application starts with `spr
 
 
 
-2. **Book Management**:
+**Book Management**:
 
 1. View all books in the library
 2. Add new books with details (title, author, year, category, image URL, file URL, description)
@@ -155,7 +155,7 @@ Hibernate automatically creates the schema when the application starts with `spr
 
 
 
-3. **Security**:
+**Security**:
 
 1. The admin panel is protected with authentication
 2. CSRF protection is enabled for form submissions
