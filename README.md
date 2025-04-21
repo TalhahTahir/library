@@ -166,7 +166,7 @@ Hibernate automatically creates the schema when the application starts with `spr
 
 ## Technical Architecture
 
-1. **Spring MVC Architecture**:
+ **Spring MVC Architecture**:
 
 1. Controllers handle HTTP requests and responses
 2. Services contain business logic
@@ -175,7 +175,7 @@ Hibernate automatically creates the schema when the application starts with `spr
 
 
 
-2. **Exception Handling**:
+ **Exception Handling**:
 
 1. Global exception handler for consistent error responses
 2. Custom exceptions for specific error scenarios
@@ -183,7 +183,7 @@ Hibernate automatically creates the schema when the application starts with `spr
 
 
 
-3. **Security**:
+ **Security**:
 
 1. Spring Security for authentication and authorization
 2. In-memory user details for admin access
