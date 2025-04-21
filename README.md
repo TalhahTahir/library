@@ -107,7 +107,7 @@ The database schema includes the following main table:
 | description | VARCHAR(500) | Book description
 
 
-The schema is automatically created by Hibernate when the application starts with `spring.jpa.hibernate.ddl-auto=update`.
+Hibernate automatically creates the schema when the application starts with `spring.jpa.hibernate.ddl-auto=update`.
 
 ## Usage
 
@@ -125,7 +125,7 @@ The schema is automatically created by Hibernate when the application starts wit
 1. Browse all available books
 2. Search for books by title
 3. View book details including cover image, author, category, and description
-4. Access book files via provided links
+4. Access book files via the provided links
 
 
 
@@ -157,7 +157,7 @@ The schema is automatically created by Hibernate when the application starts wit
 
 3. **Security**:
 
-1. Admin panel is protected with authentication
+1. The admin panel is protected with authentication
 2. CSRF protection is enabled for form submissions
 
 
@@ -213,6 +213,6 @@ We welcome contributions! Please follow these steps:
 
 ## Copyright
 
-© 2023 Talha Tahir. All rights reserved.
+© 2025 Talha Tahir. All rights reserved.
 
 Released under the MIT License. See the [LICENSE](LICENSE) file.
