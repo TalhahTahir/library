@@ -7,13 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "books")
 public class Book {
@@ -36,8 +34,20 @@ public class Book {
     @Column(length = 500)
     private String description;
 
+    public Book(Long id, String title, String author, String year, String catagory,
+                String file, String image, String description) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.year = year;
+        this.catagory = catagory;
+        this.file = file;
+        this.image = image;
+        this.description = description;
+    }
+
     // Manually added setter for id to fix Lombok issue
-public void setId(Long id) {
-    this.id = id;
-}
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
